@@ -5,7 +5,3 @@ define("DB_NAME", "php_pdo");
 define("DB_USER", "root");
 define("DB_PASS", "admin");
 
-
-
-
-?>
