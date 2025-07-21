@@ -3,7 +3,7 @@
         'name' => 'adds/api-basica',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '2dab874f5870270e3f32e3f3f6a6dd82eaadcaa7',
+        'reference' => '92d299b4c8fcafb07f5f3ecc1c6f4cd331d84a50',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'adds/api-basica' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '2dab874f5870270e3f32e3f3f6a6dd82eaadcaa7',
+            'reference' => '92d299b4c8fcafb07f5f3ecc1c6f4cd331d84a50',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
