@@ -48,3 +48,5 @@ INSERT INTO products (name, price) VALUES
 ('Drone', 600.00),
 ('Monitor', 250.00),
 ('Keyboard and Mouse Set', 80.00);
+
+SELECT * FROM campers;

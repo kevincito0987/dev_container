@@ -15,7 +15,8 @@ class CamperController extends CrudController
     public static array $dispatch = [
         "GET" => "get",
         "POST" => "create",
-        "DELETE" => "delete"
+        "DELETE" => "delete",
+        "PUT" => "update"
     ];
 
     public function get(array $args): void
@@ -52,6 +53,17 @@ class CamperController extends CrudController
 
     public function update(array $args): void
     {
-        echo json_encode(['response' => 'Recurso camper update jejejeje']);
+        if (!isset($args["data"]) || !isset($args['params'][0])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad request', 'code' => 400, 'errorUrl' => 'https://http.cat/400']);
+            return;
+        }
+        $reponse = $this->repository->update($args["data"], (int)$args['params'][0]);
+        if (!$reponse) {
+            http_response_code(409);
+            echo json_encode(['error' => 'Paso algo en la actualizacion....', 'code' => 409, 'errorUrl' => 'https://http.cat/409']);
+            return;
+        }
+        echo json_encode($reponse);
     }
 }
