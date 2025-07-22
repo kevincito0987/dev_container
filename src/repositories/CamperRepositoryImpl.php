@@ -52,6 +52,8 @@ class CamperRepositoryImpl implements CamperRepository
             edad,
             documento,
             tipo_documento,
+            created_at,
+            updated_at,
             CASE
                 WHEN nivel_ingles >= 1 AND nivel_ingles <= 2 THEN 'BAJO'
                 WHEN nivel_ingles > 2 AND nivel_ingles <= 4  THEN 'MEDIO'
@@ -80,7 +82,7 @@ class CamperRepositoryImpl implements CamperRepository
             $data['documento'],
             $data['tipo_documento'],
             $data['nivel_ingles'],
-            $data['nivel_programacion'],
+            $data['nivel_programacion']
         ]);
         if ($this->db->lastInsertId() > 0) {
             $data['id'] = $this->db->lastInsertId();
@@ -90,7 +92,7 @@ class CamperRepositoryImpl implements CamperRepository
 
     public function update(array $data, int $id): object
     {
-        $stmt = $this->db->prepare("UPDATE campers SET nombre = ?, edad = ?, documento = ?, tipo_documento = ?, nivel_ingles = ?, nivel_programacion = ? WHERE id = $id");
+        $stmt = $this->db->prepare("UPDATE campers SET nombre = ?, edad = ?, documento = ?, tipo_documento = ?, nivel_ingles = ?, nivel_programacion = ?, created_at = NOW(), updated_at = NOW() WHERE id = $id");
         $stmt->execute([
             $data['nombre'],
             $data['edad'],
@@ -98,6 +100,8 @@ class CamperRepositoryImpl implements CamperRepository
             $data['tipo_documento'],
             $data['nivel_ingles'],
             $data['nivel_programacion'],
+            $data['created_at'],
+            $data['updated_at'],
         ]);
         return (object)["message" => "Camper actualizado"];
     }
