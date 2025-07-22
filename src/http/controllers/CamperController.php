@@ -66,19 +66,19 @@ class CamperController extends CrudController
         }
         echo json_encode($reponse);
     }
-    public function delete(array $args,int $id): void
+    public function delete(array $args): void
     {
-        $response = $this->repository->delete($args, $id);
-
-        if ($response->status === "success") {
-            http_response_code(200); 
-        } else {
-            if (strpos($response->message, 'no fue encontrado') !== false) {
-                http_response_code(404); 
-            } else {
-                http_response_code(500); 
-            }
+        if (!isset($args['params'][0])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Bad request', 'code' => 400, 'errorUrl' => 'https://http.cat/400']);
+            return;
         }
-        echo json_encode($response);
+        $reponse = $this->repository->delete($args["data"] ?? [], (int)$args['params'][0]);
+        if (!$reponse) {
+            http_response_code(409);
+            echo json_encode(['error' => 'Paso algo en la eliminacion....', 'code' => 409, 'errorUrl' => 'https://http.cat/409']);
+            return;
+        }
+        echo json_encode($reponse);
     }
 }

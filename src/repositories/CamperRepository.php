@@ -7,5 +7,5 @@ interface CamperRepository {
     public function getAll(): array;
     public function create(array $data): ?object;
     public function update(array $data, int $id): ?object;
-    public function delete(array $args,int $id): object;
+    public function delete(array $data, int $id): ?array;
 }

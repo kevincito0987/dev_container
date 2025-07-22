@@ -45,7 +45,10 @@ class Route
         $data = file_get_contents('php://input', true) ?
             json_decode(file_get_contents('php://input', true), true) :
             [];
-
-        $controller->$funcion(["params" => $this->parametros, "data" => $data]);
+            $controller->$funcion([
+                "params" => $this->parametros,
+                "data" => $data ?? []
+            ]);        
+        exit;
     }
 }
