@@ -17,7 +17,7 @@ class CamperRepositoryImpl implements CamperRepository
     public function findById(int $id): ?object
 {
     $stmt = $this->db->prepare(" SELECT
-            id,
+            id as ID,
             nombre,
             edad,
             documento,
@@ -27,13 +27,13 @@ class CamperRepositoryImpl implements CamperRepository
                 WHEN nivel_ingles > 2 AND nivel_ingles <= 4  THEN 'MEDIO'
                 WHEN nivel_ingles > 4 THEN 'ALTO'
                 ELSE 'NO DEFINIDO'
-            END AS skill_ingles, -- Alias for the calculated English level
+            END AS nivelIngles, -- Alias for the calculated English level
             CASE
                 WHEN nivel_programacion < 2 THEN 'BAJO'
                 WHEN nivel_programacion >= 2 AND nivel_programacion <= 3 THEN 'MEDIO'
                 WHEN nivel_programacion > 3 THEN 'ALTO'
                 ELSE 'NO DEFINIDO'
-            END AS skill_programacion -- Alias for the calculated Programming level
+            END AS nivelProgramacion -- Alias for the calculated Programming level
         FROM
             campers
         WHERE
@@ -47,7 +47,7 @@ class CamperRepositoryImpl implements CamperRepository
     public function getAll(): array
     {
         $stmt = $this->db->prepare("SELECT
-            id,
+            id as ID,
             nombre,
             edad,
             documento,
@@ -59,13 +59,13 @@ class CamperRepositoryImpl implements CamperRepository
                 WHEN nivel_ingles > 2 AND nivel_ingles <= 4  THEN 'MEDIO'
                 WHEN nivel_ingles > 4 THEN 'ALTO'
                 ELSE 'NO DEFINIDO'
-            END AS skill_ingles, -- Alias for the calculated English level
+            END AS nivelIngles, -- Alias for the calculated English level
             CASE
                 WHEN nivel_programacion < 2 THEN 'BAJO'
                 WHEN nivel_programacion >= 2 AND nivel_programacion <= 3 THEN 'MEDIO'
                 WHEN nivel_programacion > 3 THEN 'ALTO'
                 ELSE 'NO DEFINIDO'
-            END AS skill_programacion -- Alias for the calculated Programming level
+            END AS nivelProgramacion -- Alias for the calculated Programming level
         FROM
             campers
         ORDER BY id ASC");
