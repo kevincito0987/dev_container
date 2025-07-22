@@ -66,4 +66,19 @@ class CamperController extends CrudController
         }
         echo json_encode($reponse);
     }
+    public function delete(array $args,int $id): void
+    {
+        $response = $this->repository->delete($args, $id);
+
+        if ($response->status === "success") {
+            http_response_code(200); 
+        } else {
+            if (strpos($response->message, 'no fue encontrado') !== false) {
+                http_response_code(404); 
+            } else {
+                http_response_code(500); 
+            }
+        }
+        echo json_encode($response);
+    }
 }

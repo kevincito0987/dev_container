@@ -3,6 +3,7 @@
 namespace App\repositories;
 use PDO;
 use App\repositories\CamperRepository;
+use PhpParser\Node\Stmt;
 
 class CamperRepositoryImpl implements CamperRepository
 {
@@ -15,8 +16,7 @@ class CamperRepositoryImpl implements CamperRepository
 
     public function findById(int $id): ?object
 {
-    $stmt = $this->db->prepare("
-        SELECT
+    $stmt = $this->db->prepare(" SELECT
             id,
             nombre,
             edad,
@@ -102,10 +102,24 @@ class CamperRepositoryImpl implements CamperRepository
         return (object)["message" => "Camper actualizado"];
     }
 
-    public function delete(int $id): ?object
+    public function delete(array $args,int $id): object
     {
-        $stmt = $this->db->prepare("DELETE FROM campers WHERE id = ?");
-        $stmt->execute([$id]);
-        return (object)["message" => "Camper eliminado"];
+        $camperToDelete = $this->findById($id);
+
+        if (!$camperToDelete) {
+            return (object)["message" => "El camper con ID {$id} no fue encontrado.", "status" => "error"];
+        }
+            $stmt = $this->db->prepare("DELETE FROM campers WHERE id = ?");
+            $stmt->execute([$id]);
+
+            if ($stmt->rowCount() > 0) {
+                return (object)[
+                    "message" => "Camper con ID {$id} eliminado exitosamente.",
+                    "camper" => (object)$camperToDelete, // Convert the array back to object for response
+                    "status" => "success"
+                ];
+            } else {
+                return (object)["message" => "No se pudo eliminar el camper con ID {$id} (ya fue eliminado o no se encontró en el momento de la eliminación).", "status" => "error"];
+            }
     }
 }
